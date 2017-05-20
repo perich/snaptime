@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/grahamperich/snaptime/issues"
   },
-  "homepage": "https://github.com/grahamperich/snaptime#readme"
+  "homepage": "https://github.com/grahamperich/snaptime#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3"
+  }
 }
