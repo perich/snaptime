@@ -1,0 +1,19 @@
+{
+  "name": "snaptime",
+  "version": "1.0.0",
+  "description": "live video chat with face filters like snapchat",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grahamperich/snaptime.git"
+  },
+  "author": "Graham Perich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grahamperich/snaptime/issues"
+  },
+  "homepage": "https://github.com/grahamperich/snaptime#readme"
+}
