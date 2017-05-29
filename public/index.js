@@ -35,12 +35,17 @@ var host = {};
     host.signal = data;
   });
 
-  var urlButton = $('#urlGenerator');
+  const urlBtn = $('#urlGenerator');
+  const toggleMediaBtn = $('#toggleMediaStream');
 
-  urlButton.click(() => {
+  urlBtn.click(() => {
     xhr.getNewUrl(host.signal)
       .done(xhr.handleSuccess)
       .fail(xhr.handleError)
+  })
+
+  toggleMediaBtn.click((e) => {
+    $('#video').toggle();
   })
 
 })()
@@ -67,24 +72,52 @@ p.on('stream', function (stream) {
   video.play()
 })
 
-// navigator.getUserMedia({ video: true, audio: true }, gotMedia, function () {})
+navigator.getUserMedia({ video: true, audio: true }, gotMedia, function () {})
  
-// function gotMedia (stream) {
-//   var peer1 = new Peer({ initiator: true, stream: stream })
-//   var peer2 = new Peer()
+function gotMedia (stream) {
+  var peer1 = new Peer({ initiator: true, stream: stream })
+  var peer2 = new Peer()
  
-//   peer1.on('signal', function (data) {
-//     peer2.signal(data)
-//   })
+  peer1.on('signal', function (data) {
+    peer2.signal(data)
+  })
  
-//   peer2.on('signal', function (data) {
-//     peer1.signal(data)
-//   })
+  peer2.on('signal', function (data) {
+    peer1.signal(data)
+  })
  
-//   peer2.on('stream', function (stream) {
-    // // got remote video stream, now let's show it in a video tag 
-    // var video = document.querySelector('video')
-    // video.src = window.URL.createObjectURL(stream)
-    // video.play()
-//   })
-// }
+  peer2.on('stream', function (stream) {
+    // got remote video stream, now let's show it in a video tag 
+    var video = document.querySelector('video');
+    var ctracker = new clm.tracker();
+    ctracker.init(pModel);
+  
+    video.src = window.URL.createObjectURL(stream);
+    video.play().then(() => {
+
+      setTimeout(() => {
+        ctracker.start(video);
+          var canvasInput = document.getElementById('drawCanvas');
+          var cc = canvasInput.getContext('2d');
+          function drawLoop() {
+            requestAnimationFrame(drawLoop);
+            cc.clearRect(0, 0, canvasInput.width, canvasInput.height);
+            ctracker.draw(canvasInput);
+          }
+          drawLoop();
+      }, 5000)
+      
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    (function positionLoop() {
+      requestAnimationFrame(positionLoop);
+      var positions = ctracker.getCurrentPosition();
+      // positions = [[x_0, y_0], [x_1,y_1], ... ]
+      // do something with the positions ...
+      console.log(positions);
+    })();
+
+  })
+}

@@ -15,11 +15,19 @@
       <button type="submit">submit</button>
     </form>
     <pre id="outgoing"></pre>
-    <video id="video"></video>
+    
+    <button id="toggleMediaStream">Toggle Video</button>
     <button id="urlGenerator">Generate URL></button>
+    
+    <div id="videoStream">
+      <video width="400" height="300" id="video"></video>
+      <canvas id="drawCanvas" width="400" height="300"></canvas>
+    </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/8.1.0/simplepeer.min.js" integrity="sha256-nD4/mELdsKMfGDC1KoeNbr+EBPHrFFMcr7LruQRnp50=" crossorigin="anonymous"></script>
   <script src="index.js"></script>
+  <script src="clmtrackr.js"></script>
+  <script src="model_pca_20_svm.js"></script>
 </body>
 </html>
