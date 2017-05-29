@@ -1,0 +1,18 @@
+#outgoing {
+    width: 600px;
+    word-wrap: break-word;
+}
+
+#videoStream {
+    position: relative;
+}
+
+#videoStream video {
+    object-fit: contain;
+}
+
+#videoStream canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
