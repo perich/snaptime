@@ -16,7 +16,10 @@ const form = $('form').first();
 
 urlBtn.click(() => {
   xhr.getNewUrl(host.signal)
-    .done(xhr.handleSuccess)
+    .done(xhr.handleSuccess, (data) => {
+      // append the new URL generated from server so user can copy/paste it
+      $('#generatedUrl').val(data.urlHash); 
+    })
     .fail(xhr.handleError)
 })
 
@@ -24,15 +27,19 @@ toggleMediaBtn.click((e) => {
   $('#video').toggle();
 })
 
-form.submit(function (ev) {
+$('form').first().submit(ev => {
   ev.preventDefault()
-  p.signal(JSON.parse($('#incoming').value))
+  p.signal(JSON.parse(document.querySelector('#incoming').value));
 })
+
 
 // Setup WebRTC p2p handlers
 p.on('error', error => console.log('error: ', error));
 
-p.on('signal', data => host.signal = data);
+p.on('signal', data => {
+  console.log(data);
+  host.signal = data;
+});
  
 p.on('data', data => console.log('data: ' + data));
 
@@ -58,19 +65,19 @@ function gotMedia (stream) {
 }
 
 function trackFace () {
-    const ctracker = new clm.tracker();
-    const canvasInput = $('#drawCanvas')[0];
-    const cc = canvasInput.getContext('2d');
+    // const ctracker = new clm.tracker();
+    // const canvasInput = $('#drawCanvas')[0];
+    // const cc = canvasInput.getContext('2d');
 
-    ctracker.init(pModel);
-    ctracker.start(video);
+    // ctracker.init(pModel);
+    // ctracker.start(video);
 
-    (function drawLoop() {
-      // array of coordinates for facial features
-      const positions = ctracker.getCurrentPosition();
+    // (function drawLoop() {
+    //   // array of coordinates for facial features
+    //   const positions = ctracker.getCurrentPosition();
 
-      requestAnimationFrame(drawLoop);
-      cc.clearRect(0, 0, canvasInput.width, canvasInput.height);
-      ctracker.draw(canvasInput);
-    })();
+    //   requestAnimationFrame(drawLoop);
+    //   cc.clearRect(0, 0, canvasInput.width, canvasInput.height);
+    //   ctracker.draw(canvasInput);
+    // })();
 }
